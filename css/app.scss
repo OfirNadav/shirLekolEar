@@ -1,0 +1,35 @@
+@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+@import "variables";
+@import '../vendor/add2Homescreen/style/addtohomescreen.css';
+@import "map";
+@import "font/gan/stylesheet.css";
+
+html,body, .content{
+  height: 100%;
+  width: 100%;
+  direction: rtl;
+  font-family: gan_clmbold;
+}
+
+.space-top5 { margin-top:5px; }
+.space-top7 { margin-top:7px; }
+.space-top10 { margin-top:10px; }
+.space-top15 { margin-top:15px; }
+.space-top20 { margin-top:20px; }
+.space-top30 { margin-top:30px; }
+
+.btn {
+  background: $btn-bg-color;
+  border-radius: 12px;
+  font-family: Arial;
+  color: $btn-font-color;
+  font-size: 1em;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+
+  &:hover {
+    background: $btn-hover-color;
+    text-decoration: none;
+  }
+}
+
