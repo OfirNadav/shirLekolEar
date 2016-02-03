@@ -5,25 +5,20 @@
             <a ng-href="" ng-click="vm.toggleModal()">אודות</a>
         </div>
     </header>
-    <div class="cityPopUp" ng-show="vm.closestCity">
-        <a href="" class="close" ng-click="vm.closestCity = !vm.closestCity">&#10006;</a>
+
+    <div class="cityPopUp" ng-show="vm.isInRange">
+        <a href="" class="close" ng-click="vm.isInRange = !vm.isInRange">&#10006;</a>
         <div class="innerPopUp">
             <div>
                 <div>מתקרבים ל...</div>
                 <div class="cityName">{{vm.closestCity.name}}<span>!</span></div>
-                <span>(</span>
-                <span>{{vm.distance | number:2}}</span>
-                <span>ק"מ</span>
-                <span>)</span>
+                <div class="cityDistance">( {{vm.distance | number:2}}  ק"מ  )</div>
             </div>
-            <div class="space-top10">
-                <span>מכירים שיר על </span>
-                <span>{{vm.closestCity.name}}</span>
-                <span>?</span>
-            </div>
-            <button class="btnPlay" ng-click="vm.playNearCityAudio()">גלה לי</button>
+            <div class="space-top10">מכירים שיר על {{vm.closestCity.name}}?</div>
+            <button class="btnPlay" ng-click="vm.playNearCityAudio()">גלה לי<i class="fa fa-music"></i></button>
         </div>
     </div>
+
     <div class="modal-about" ng-show="vm.showModal">
         <div class="row modalHeader">
             <span class="modalTitle"> שיר <span class="secColor"> לכל עיר</span></span>
@@ -32,7 +27,7 @@
         <hr/>
         <div class="modalInfo">
             <p>
-                <span>המשחק דרך מהנה </span>
+                <span>משחק דרך מהנה </span>
                 <span>המשלב בין מוזיקה לידיעת הארץ</span>
                 <span>כאשר תתקרבו לעיר מסויימת</span>
                 <span>תקבלו הזדמנות להיזכר בשיר מתאים!</span>

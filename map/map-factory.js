@@ -71,10 +71,25 @@
                     return city.id == cityId;
                 });
                 return cityMatch[0];
+            },
+            degrees2Radians: function (){
+                /** Converts numeric degrees to radians */
+                if (typeof(Number.prototype.toRad) === "undefined") {
+                    Number.prototype.toRad = function () {
+                        return this * Math.PI / 180;
+                    }
+                }
+            },
+            distance: function (lng1, lat1, lng2, lat2) {
+                var R = 6371; // Radius of the earth in km
+                var dLat = (lat2 - lat1).toRad();  // Javascript functions in radians
+                var dLng = (lng2 - lng1).toRad();
+                var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+                    Math.sin(dLng / 2) * Math.sin(dLng / 2);
+                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                return R * c; // Distance in km
             }
-
         }
-
     });
-
 })();

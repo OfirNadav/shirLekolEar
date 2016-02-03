@@ -49,8 +49,8 @@ ath.intl = {
 	},
 
 	en_us: {
-		ios: '<strong>Add Katarzis To Home Screen</strong><small>Press the menu hardware button by tapping the top right menu icon %icon and then add to home screen</small>',
-		android: '<strong>Add Katarzis To Home Screen</strong><small>Press the menu hardware button by tapping the top right menu icon %icon and then add to home screen</small>'
+		ios: '<strong>Add Shir Lekol Ear To Home Screen</strong><small>Press the menu hardware button by tapping the top right menu icon %icon and then add to home screen</small>',
+		android: '<strong>Add Shir Lekol Ear To Home Screen</strong><small>Press the menu hardware button by tapping the top right menu icon %icon and then add to home screen</small>'
 	},
 
 	es_es: {
@@ -69,8 +69,8 @@ ath.intl = {
 	},
 
 	he_il: {
-		ios: '<span dir="rtl"><strong>הוסף את קטרזיס למסך הבית!</strong></span><small dir="rtl">לחץ על סמל התפריט העליון %icon ובחר "הוסף למסך דף הבית"</small>',
-		android: '<span dir="rtl"><strong> הוסף את קטרזיס למסך הבית!</strong></span><small dir="rtl">לחץ על סמל התפריט העליון %icon ובחר "הוסף למסך דף הבית"</small>'
+		ios: '<span dir="rtl"><strong>הוסף את שיר לכל עיר למסך הבית!</strong></span><small dir="rtl">לחץ על סמל התפריט העליון %icon ובחר "הוסף למסך דף הבית"</small>',
+		android: '<span dir="rtl"><strong> הוסף את שיר לכל עיר למסך הבית!</strong></span><small dir="rtl">לחץ על סמל התפריט העליון %icon ובחר "הוסף למסך דף הבית"</small>'
 	},
 
 	hu_hu: {

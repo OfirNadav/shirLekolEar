@@ -7,33 +7,38 @@ angular.module('myApp.map', ['ngRoute'])
             templateUrl: 'map/map.html'
         });
     })
-    .controller('MapCtrl', function (MapFactory, $scope) {
+    .controller('MapCtrl', function (MapFactory, $scope, $timeout) {
         var ctrl = this;
-        var currentlyPlaying = null;
-        var currentlyCity = null;
+        var currCity = null;
 
-        this.minDistanceBoolean = false;
+        this.isInRange = false;
         this.markers = [];
         this.closestCity = null;
         this.distance = 0;
         this.cities = MapFactory.getCities();
+        this.markerMyLocation = null;
+        this.map = null;
 
-// handel Modal About
+        // handel Modal About
         this.showModal = false;
         this.toggleModal = function(){
-            console.log('here');
             ctrl.showModal = !ctrl.showModal;
         };
 
         function init(){
+            var CENTER = {lat: 31.394989, lng: 35.031700};  // center of Israel
+
             var mapOptions = {
                 zoom: 9,
-                center: new google.maps.LatLng(31.394989, 35.031700),
+                center: new google.maps.LatLng(CENTER.lat, CENTER.lng),
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 disableDefaultUI: true
             };
-            var boxMap = new google.maps.Map(document.getElementById('map'), mapOptions);
+            ctrl.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
+
+
+            // Create Markers for Cities
             for (var i = 1; i <= ctrl.cities.length; i++) {
                 var latLng = ctrl.cities[i - 1].latLng;
 
@@ -45,7 +50,7 @@ angular.module('myApp.map', ['ngRoute'])
                         path: google.maps.SymbolPath.CIRCLE,
                         scale: 0
                     },
-                    map: boxMap,
+                    map: ctrl.map,
                     draggable: false,
                     raiseOnDrag: false,
                     labelContent: '',
@@ -57,123 +62,129 @@ angular.module('myApp.map', ['ngRoute'])
             }
 
             ctrl.markers.forEach(function (marker, i) {
-                google.maps.event.addListener(marker, "click", function () {
-                    playAudio(MapFactory.getCityById(i+1));
+                google.maps.event.addListener(marker, 'click', function () {
+                    $scope.$apply(function () {
+                        ctrl.closestCity = MapFactory.getCityById(i+1);
+                        if (currCity) playAudio(currCity);
+                        else ctrl.isInRange = true;
+
+
+                    });
                 });
             });
         }
 
         function playAudio(city) {
+            if (ctrl.isInRange) return;
+            var COLOR_DEFAULT = "#89849b";
             var audio = city.songUrl;
-            console.log('audio: ', audio);
             var elm = document.querySelector('.pin' + city.id);
 
-            if (audio.paused) {
-                if (currentlyPlaying) {
-                    currentlyPlaying.pause();
-                    document.querySelector('.pin' + currentlyCity.id).style.backgroundColor = "#89849b";  //default pin color
-                }
-                console.log('elm play: ', elm);
-                audio.play();
-                currentlyPlaying = audio;
-                currentlyCity = city;
-                elm.style.backgroundColor = "#F15252";  // playing pin color
-            }  else {
-                currentlyPlaying = null;
-                audio.pause();
-                elm.style.backgroundColor = "#89849b";  //default pin color
-
+            if (currCity) {
+                currCity.audio.pause();
+                currCity.audio.currentTime = 0;
+                document.querySelector('.pin' + currCity.id).style.backgroundColor = COLOR_DEFAULT;  //default pin color
+                currCity = null;
+                return;
             }
+            audio.play();
+            currCity = city;
+            currCity.audio = audio;
+            elm.style.backgroundColor = "#F15252";  // playing pin color
         }
 
-         this.playNearCityAudio = function () {
-            playAudio(ctrl.closestCity);
-             ctrl.closestCity = !ctrl.closestCity;
-        };
-
-
-         function findNearest() {
-
-            var minDistance = Number.MAX_VALUE;
-////****************production version --- remove from comments when testing is done*****************
+        function findNearest() {
             window.navigator.geolocation.watchPosition(positionUpdate);
+             //movingTest(); // Test positionUpdate
+             MapFactory.degrees2Radians();
+        }
 
+        function positionUpdate(pos) {
+            var MIN_KM = 20;
+            var minCity = null;
+            var minDistance = Number.MAX_VALUE;
+            ctrl.closestCity = null;
+            ctrl.distance = 0;
 
-            function positionUpdate(pos) {
-                ctrl.closestCity = null;
-                var lat = pos.coords.latitude;
-                var lon = pos.coords.longitude;
-                ctrl.cities.forEach(function (city) {
+            var loc = {lat: pos.coords.latitude, lng: pos.coords.longitude};
 
-                    if (distance(city.latLng.lng, city.latLng.lat, lon, lat) < minDistance) {
-                        minDistance = distance(city.latLng.lng, city.latLng.lat, lon, lat);
-                        ctrl.closestCity = city;
-                        ctrl.distance = minDistance;
-                    }
+            updateMyMarker(loc);
+
+            ctrl.cities.forEach(function (city) {
+                var DistInKm = MapFactory.distance(city.latLng.lng, city.latLng.lat, loc.lng, loc.lat);
+                if (DistInKm < minDistance) {
+                    minDistance = DistInKm;
+                    minCity = city;
+                }
+            });
+
+            $scope.$apply(function () {
+                if (minDistance < MIN_KM) {
+                    ctrl.closestCity = minCity;
+                    ctrl.distance = minDistance;
+                    ctrl.isInRange = true;
+                } else {
+                    ctrl.isInRange = false;
+                }
+            });
+        }
+
+        function updateMyMarker(loc){
+
+            if (ctrl.markerMyLocation) {
+                ctrl.markerMyLocation.setPosition(new google.maps.LatLng(loc.lat, loc.lng));
+                ctrl.map.panTo(new google.maps.LatLng(loc.lat, loc.lng));
+            } else {
+                ctrl.markerMyLocation = new MarkerWithLabel({
+                    position: loc,
+                    id: 'me',
+                    title: 'Me',
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 0
+                    },
+                    map: ctrl.map,
+                    draggable: false,
+                    raiseOnDrag: false,
+                    labelContent: '',
+                    labelAnchor: new google.maps.Point(10, 10),
+                    labelClass: 'me'
+
                 });
-                if (minDistance < 20) {
-                    ctrl.minDistanceBoolean = true;
-                    $scope.$apply();
-                }
-
             }
+        }
 
-////*****************Test Environment*****************************
-//            function movingTest() {
-//                var index = 0;
-//                var testData = [{lat: 31.274594, lon: 34.779791}, {lat: 31.855389, lon: 36.376344}];
-//                var test = setInterval(function () {
-//                    ctrl.closestCity = null;
-//                    //var lat = 31.855389;
-//                    //var lon = 36.376344;
-//                    //var lat = 31.274401;
-//                    //var lon = 34.779823;
-//                    var lat = testData[index].lat;
-//                    var lon = testData[index].lon;
-//                    ctrl.cities.forEach(function (city) {
-//
-//                        if (distance(city.latLng.lng, city.latLng.lat, lon, lat) < minDistance) {
-//                            minDistance = distance(city.latLng.lng, city.latLng.lat, lon, lat);
-//                            ctrl.closestCity = city;
-//                            ctrl.distance = minDistance;
-//                        }
-//                    });
-//                    if (minDistance < 20) {
-//                        ctrl.minDistanceBoolean = true;
-//                        $scope.$apply();
-//                    }
-//                    index++;
-//                }, 5000);
-//                if (index >= testData.length)clearInterval(test);
-//            }
-//
-//            movingTest();
-////**************************End if test Env**********************
+        // Test positionUpdate
+        function movingTest() {
+            var index = 0;
 
+            // TLV: 32.066158, lng: 34.777819
+            // EILAT: lat: 29.557669, lng: 34.951925
+            // HAIFA: lat: 32.794044, lng: 34.989571
 
-            function distance(lon1, lat1, lon2, lat2) {
-                var R = 6371; // Radius of the earth in km
-                var dLat = (lat2 - lat1).toRad();  // Javascript functions in radians
-                var dLon = (lon2 - lon1).toRad();
-                var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                    Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
-                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                var d = R * c; // Distance in km
-                return d;
-            }
+            var testData = [{latitude: 29.557669, longitude: 34.951925},
+                {latitude: 32.794044, longitude: 34.989571},
+                {latitude: 31.768319, longitude: 35.21371}
+            ];
 
-            /** Converts numeric degrees to radians */
-            if (typeof(Number.prototype.toRad) === "undefined") {
-                Number.prototype.toRad = function () {
-                    return this * Math.PI / 180;
-                }
-            }
+            var pos = {};
+
+            var test = setInterval(function () {
+                console.log('Interval ' + index);
+                pos.coords = testData[index];
+                positionUpdate(pos);
+                index++;
+                if (index > testData.length-1) clearInterval(test);
+            }, 5000);
 
         }
 
-        init();
-        //findNearest();
 
+        this.playNearCityAudio = function () {
+            ctrl.isInRange = false;
+            playAudio(ctrl.closestCity);
+        };
+        init();
+        $timeout(findNearest, 2000);
     });
 })();

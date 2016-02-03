@@ -2,23 +2,26 @@
 <html lang="he" ng-app="myApp">
 <head>
     <meta charset="UTF-8">
+    <meta name="keywords" content="שיר לכל עיר משחק דרך מוזיקה וידיעת הארץ קודינג אקדמי רוני קרקובר אופיר נדב">
+    <meta name="description" content="שיר לכל עיר הוא משחק דרך מהנה המשלב בין מוזיקה לידיעת הארץ">
     <title>שיר לכל עיר</title>
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/font/gan/stylesheet.css" type="text/css" charset="utf-8">
     <link rel='shortcut icon' href='lib/images/favicon.ico' type='image/x-icon' >
 </head>
 <body>
+
 <div ng-view class="content"></div>
 
 <script src='vendor/stopExecutionOnTimeout.js'></script>
 <script src='//maps.google.com/maps/api/js?sensor=false'></script>
-<script src='//google-maps-utility-library-v3.googlecode.com/svn-history/r391/trunk/markerwithlabel/src/markerwithlabel.js'></script>
+<script src='vendor/markerwithlabel.min.js'></script>
 
 <script src='vendor/jquery.min.js'></script>
 
 <script src="vendor/add2Homescreen/src/addtohomescreen.js"></script>
-<script src="vendor/angular.js"></script>
-<script src="vendor/angular-route.js"></script>
+<script src="vendor/angular.min.js"></script>
+<script src="vendor/angular-route.min.js"></script>
 <script src="map/map.js"></script>
 <script src="map/map-factory.js"></script>
 <script src="app.js"></script>

@@ -1,56 +1,25 @@
 $btn-play-color: #3498db;
 
 .content-map {
-  header {
-    position: absolute;
-    top: 3.4em;
-    background-color: rgba(255, 255, 255, 0.9);
-    z-index: 1;
-    width: 100%;
-    text-align: center;
-  }
+  top: 20px;
+}
 
+.map{
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 
 .cityPopUp {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.9);
   z-index: 1;
-  width: 30%;
-  height: 30%;
+  width: 50%;
   top:35%;
-  left:35%;
+  left:25%;
   border-radius: 1em;
   text-align: center;
 
-  .close {
-    align-self: flex-start;
-    width:25px;
-    height:25px;
-    display:block;
-    text-transform:uppercase;
-    text-decoration:none;
-    color:#fff;
-    font-family:"Tahoma", Helvetica, sans-serif;
-    text-align:center;
-    font-size:18px;
-    line-height:1.4em;
-    border-color: #1472ad;
-    background-color: #F00;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#F00), to(#cc0000));
-    background-image: -webkit-linear-gradient(top, #F00, #cc0000);
-    background-image: -moz-linear-gradient(top, #F00, #cc0000);
-    background-image: -o-linear-gradient(top, #F00, #cc0000);
-    background-image: linear-gradient(to bottom, #F00, #cc0000);
-    box-shadow:0px 0px 2px 0px #666;
-    -moz-box-shadow:0px 0px 2px 0px #666;
-    -webkit-box-shadow:0px 0px 2px 0px #666;
-    border-radius:50%;
-    -moz-border-radius:50%;
-    -webkit-border-radius:50%;
-    text-indent:1px;
-    font-weight:bold;
-  }
 
   .innerPopUp {
     height: 80%;
@@ -90,12 +59,10 @@ $btn-play-color: #3498db;
   .cityName {
     font-size: 2em;
   }
-}
-
-.map{
-  height: 100%;
-  width: 100%;
-  position: relative;
+  .cityDistance {
+    font-size: 0.8em;
+    color: lighten($font-color, 50%);
+  }
 }
 
 .pin {
@@ -128,29 +95,32 @@ $btn-play-color: #3498db;
   -o-animation-duration: 1s;
   -ms-animation-duration: 1s;
   animation-duration: 1s;
+
+  &:before {
+    content: '';
+    width: 35px;
+    height: 35px;
+    margin: 8px 8px 0 8px;
+    background: $secondary-color;
+    position: absolute;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+  }
+
+  &:after {
+    font-family: FontAwesome;
+    content: "\f001";
+    color: $bg-color;
+    font-size: 1.8em;
+    padding: 15px 18px;
+    position: absolute;
+    z-index: 999;
+    transform: rotate(45deg);
+  }
 }
 
-.pin:after {
-  font-family: FontAwesome;
-  content: "\f001";
-  color: $bg-color;
-  font-size: 1.8em;
-  padding: 15px 18px;
-  position: absolute;
-  z-index: 999;
-  transform: rotate(45deg);
-}
 
-.pin:before {
-  content: '';
-  width: 35px;
-  height: 35px;
-  margin: 8px 8px 0 8px;
-  background: $secondary-color;
-  position: absolute;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-}
+
 .about {
   color: $a-color;
   cursor: pointer;
@@ -159,7 +129,6 @@ $btn-play-color: #3498db;
 .modal-about {
   @extend .cityPopUp;
   width: 50%;
-  height: 50%;
   background-color: $bg-color;
   color: $font-color;
   display: flex;
@@ -208,4 +177,62 @@ $btn-play-color: #3498db;
     margin: 3em;
     width: 10em;
   }
+}
+
+.me {
+  box-sizing: border-box;
+  background: $me-main-color;
+  box-shadow: 2px 2px 4px $me-box-shadow;
+  border:5px solid $me-border-color;
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  -webkit-animation: pulse 5s ease 1s INFINITE;
+  -moz-animation: pulse 5s ease 1s INFINITE;
+  animation: pulse 5s ease 1s INFINITE;
+}
+
+/* ANIMATIONS */
+@-webkit-keyframes pulse {
+  40% {
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    transform: scale(1.5);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@-moz-keyframes pulse {
+  40% {
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    transform: scale(1.5);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes pulse {
+  40% {
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    transform: scale(1.5);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+.fa-music {
+  margin-right: 10px;
 }
