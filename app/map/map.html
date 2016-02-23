@@ -1,0 +1,48 @@
+<section class="content content-map">
+    <header>
+        <h1>שיר לכל עיר</h1>
+        <div class="about">
+            <a ng-href="" ng-click="vm.toggleModal()">אודות</a>
+            <span> | </span>
+            <a ng-href="" ng-click="vm.toggleFullScreen()">מסך מלא</a>
+        </div>
+    </header>
+
+    <div class="cityPopUp" ng-show="vm.isInRange">
+        <a href="" class="close" ng-click="vm.handleClose()">&#10006;</a>
+        <div class="innerPopUp">
+            <div>
+                <div>מתקרבים ל...</div>
+                <div class="cityName">{{vm.closestCity.name}}<span>!</span></div>
+                <div class="cityDistance">( {{vm.distance | number:2}}  ק"מ  )</div>
+            </div>
+            <div class="space-top10">מכירים שיר על {{vm.closestCity.name}}?</div>
+            <button class="btnPlay" ng-click="vm.playNearCityAudio()">גלה לי<i class="fa fa-music"></i></button>
+        </div>
+    </div>
+
+    <div class="modal-about" ng-show="vm.showModal">
+        <div class="row modalHeader">
+            <span class="modalTitle"> שיר <span class="secColor"> לכל עיר</span></span>
+            <i class="fa fa-music fa-2x"></i>
+        </div>
+        <hr/>
+        <div class="modalInfo">
+            <p>
+                <span>משחק דרך מהנה </span>
+                <span>המשלב בין מוזיקה לידיעת הארץ</span>
+                <span>כאשר תתקרבו לעיר מסויימת</span>
+                <span>תקבלו הזדמנות להיזכר בשיר מתאים!</span>
+            </p>
+            <p>
+                <span>נבנה באהבה וכשירות לציבור על ידי בוגרי </span>
+                <a ng-href="//coding-academy.org/" target="_blank">Coding-Acedemy.org</a>
+                <span>רוני קרקובר ואופיר נדב</span>
+            </p>
+        </div>
+        <div>
+            <button ng-click="vm.toggleModal()" class="btn btn-default">סבבה</button>
+        </div>
+    </div>
+    <div class="map" id="map"></div>
+</section>
