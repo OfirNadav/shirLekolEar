@@ -27,7 +27,7 @@ angular.module('myApp.map', ['ngRoute'])
         this.toggleModal = function(){
             ctrl.showModal = !ctrl.showModal;
         };
-
+        //console.log('this.cities: ', this.cities);
         mapSetup();
 
         function mapSetup() {

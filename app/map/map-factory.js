@@ -1,156 +1,172 @@
 (function () {
     'use strict';
     var module = angular.module('myApp.map');
-    module.factory('MapFactory', function () {
+    module.factory('MapFactory', function ($http ,$q) {
 
         var cities = [
-            {
-                id: 1,
+        {
+            id: 1,
                 name: 'בית שאן',
-                latLng: {lat: 32.517996, lng: 35.496409},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/bet-shean.mp3')
-                }]
-            },
-            {
-                id: 2,
+            latLng: {lat: 32.517996, lng: 35.496409},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/bet-shean.mp3')
+            }]
+        },
+        {
+            id: 2,
                 name: 'ירושלים',
-                latLng: {lat: 31.787770, lng: 35.210959},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/jerusalemCut.mp3')
-                }]
-            },
-            {
-                id: 3,
+            latLng: {lat: 31.787770, lng: 35.210959},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/jerusalemCut.mp3')
+            }]
+        },
+        {
+            id: 3,
                 name: 'חיפה',
-                latLng: {lat: 32.826208, lng: 34.979194},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/Haifa.mp3')
-                }]
-            },
-            {
-                id: 4,
+            latLng: {lat: 32.826208, lng: 34.979194},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/Haifa.mp3')
+            }]
+        },
+        {
+            id: 4,
                 name: 'באר שבע',
-                latLng: {lat: 31.288780, lng: 34.790113},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/beer-sheva-cut.mp3')
-                }]
+            latLng: {lat: 31.288780, lng: 34.790113},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/beer-sheva-cut.mp3')
+            }]
 
-            },
-            {
-                id: 5,
+        },
+        {
+            id: 5,
                 name: 'תל אביב',
-                latLng: {lat: 32.093689, lng: 34.782142},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/tlvCut.mp3')
-                }]
-            },
-            {
-                id: 6,
+            latLng: {lat: 32.093689, lng: 34.782142},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/tlvCut.mp3')
+            }]
+        },
+        {
+            id: 6,
                 name: 'כפר סבא',
-                latLng: {lat: 32.188355, lng: 34.904188},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/kefar-saba.mp3')
-                }]
-            },
-            {
-                id: 7,
+            latLng: {lat: 32.188355, lng: 34.904188},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/kefar-saba.mp3')
+            }]
+        },
+        {
+            id: 7,
                 name: 'אילת',
-                latLng: {lat: 29.633019, lng: 34.924200},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/eilat.mp3')
-                }]
-            },
-            {
-                id: 8,
+            latLng: {lat: 29.633019, lng: 34.924200},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/eilat.mp3')
+            }]
+        },
+        {
+            id: 8,
                 name: 'רחובות',
-                latLng: {lat: 31.907303, lng: 34.811231},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/rehovot-sheli_sharona.mp3')
-                }]
-            },
-            {
-                id: 9,
+            latLng: {lat: 31.907303, lng: 34.811231},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/rehovot-sheli_sharona.mp3')
+            }]
+        },
+        {
+            id: 9,
                 name: 'רמת גן',
-                latLng: {lat: 32.075543, lng: 34.821947},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/ramatGan-dublin.mp3')
-                }]
-            },
-            {
-                id: 10,
+            latLng: {lat: 32.075543, lng: 34.821947},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/ramatGan-dublin.mp3')
+            }]
+        },
+        {
+            id: 10,
                 name: 'גדרה',
-                latLng: {lat: 31.816847, lng: 34.778689},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/gedera.mp3')
-                }]
-            },
-            {
-                id: 11,
+            latLng: {lat: 31.816847, lng: 34.778689},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/gedera.mp3')
+            }]
+        },
+        {
+            id: 11,
                 name: 'פתח תקווה',
-                latLng: {lat: 32.090960, lng: 34.887522},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/petakh_tikva.mp3')
-                }]
-            },
-            {
-                id: 12,
+            latLng: {lat: 32.090960, lng: 34.887522},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/petakh_tikva.mp3')
+            }]
+        },
+        {
+            id: 12,
                 name: 'חולון',
-                latLng: {lat: 32.020543, lng: 34.786928},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/holon-amir_lev.mp3')
-                }]
-            },
-            {
-                id: 13,
+            latLng: {lat: 32.020543, lng: 34.786928},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/holon-amir_lev.mp3')
+            }]
+        },
+        {
+            id: 13,
                 name: 'בת ים',
-                latLng: {lat: 32.018215, lng: 34.746760},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/batYam-punth.mp3')
-                }]
-            },
-            {
-                id: 14,
+            latLng: {lat: 32.018215, lng: 34.746760},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/batYam-punth.mp3')
+            }]
+        },
+        {
+            id: 14,
                 name: 'ראשון לציון',
-                latLng: {lat: 31.980073, lng: 34.789675},
-                songs: [{
-                    artist: '',
-                    title:'',
-                    songUrl: new Audio('lib/songs/rishon_letziyon.mp3')
-                }]
-            }
+            latLng: {lat: 31.980073, lng: 34.789675},
+            songs: [{
+                artist: '',
+                title:'',
+                songUrl: new Audio('lib/songs/rishon_letziyon.mp3')
+            }]
+        }
         ];
+
+        //function getCitiesData () {
+        //    if (cities) {
+        //        return $q(function(resolve, reject) {
+        //            setTimeout(function() {
+        //                resolve(cities);
+        //            }, 0);
+        //        });
+        //
+        //    } else {
+        //        return $http.get("json/cities.json")
+        //            .then(function(res){
+        //                cities = res.data;
+        //                return cities;
+        //            });
+        //    }
+        //}
 
         return {
             getCities: function () {
-                return cities;
-
+                    return cities;
             },
             getCityById: function (cityId) {
                 var cityMatch = cities.filter(function (city) {

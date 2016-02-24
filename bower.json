@@ -1,8 +1,8 @@
 {
-  "name": "angular-seed",
+  "name": "??? ??? ???",
   "description": "A starter project for AngularJS",
   "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
+  "homepage": "http://ofirnadav.com/dev/shir",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -12,9 +12,6 @@
     "angular-mocks": "~1.5.0",
     "html5-boilerplate": "~5.2.0",
     "angular-animate": "latest",
-    "ui-bootstrap-tpls": "~1.1.2",
-    "angular-leaflet-directive": "latest",
-
-
+    "ui-bootstrap-tpls": "~1.1.2"
   }
 }

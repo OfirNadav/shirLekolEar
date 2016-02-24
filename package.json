@@ -1,11 +1,11 @@
 {
-  "name": "crime",
+  "name": "??? ??? ???",
   "private": true,
   "version": "0.0.0",
-  "description": "A starter project for AngularJS",
+  "description": "??? ??? ???",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/angular/angular-seed.git"
+    "url": "git+http://ofirnadav.com/dev/shir"
   },
   "license": "MIT",
   "devDependencies": {
